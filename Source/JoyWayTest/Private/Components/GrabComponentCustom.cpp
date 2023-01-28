@@ -38,7 +38,7 @@ bool UGrabComponentCustom::TryRelease()
     IInteractionInterface* Interface = Cast<IInteractionInterface>(Owner);
 
     if (!Interface) return false;
-    Interface->OnRelease();
+    Interface->OnReleaseGrab();
 
     IsGrabbed = false;
     return true;

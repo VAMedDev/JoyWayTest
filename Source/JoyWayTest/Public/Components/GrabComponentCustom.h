@@ -15,13 +15,18 @@ class JOYWAYTEST_API UGrabComponentCustom : public UActorComponent
 public:
     UGrabComponentCustom();
 
-    bool IsGrabbed = false;
-
 protected:
     virtual void BeginPlay() override;
 
     UPROPERTY()
     AActor* Owner;
+
+    // whether this item is taken right now
+    bool IsGrabbed = false;
+
+    // whether if can we grab that item in general
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Settings")
+    bool IsGrababble = true;
 
 public:
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -31,4 +36,9 @@ public:
 
     UFUNCTION(BlueprintCallable)
     bool TryRelease();
+
+    bool GetIsGrabbed() { return IsGrabbed; };
+    void SetIsGrabbed(bool InIsGrabbed) { IsGrabbed = InIsGrabbed; };
+    bool GetIsGrababble() { return IsGrababble; };
+    void SetIsGrababble(bool InIsGrabbable) { IsGrababble = InIsGrabbable; };
 };

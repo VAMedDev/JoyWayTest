@@ -4,7 +4,7 @@
 #include "UObject/Interface.h"
 #include "InteractionInterface.generated.h"
 
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, Blueprintable)
 class UInteractionInterface : public UInterface
 {
     GENERATED_BODY()
@@ -19,17 +19,11 @@ public:
     virtual void OnGrab(UMotionControllerComponent* MotionControllerComponent) = 0;
 
     UFUNCTION()
-    virtual void OnRelease() = 0;
+    virtual void OnReleaseGrab() = 0;
 
-    UFUNCTION()
-    virtual void OnTrigger() = 0;
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
+    void OnTriggerPressed();
 
-    // #TODO: заготовки под вызываемые в BP функции
-    //  UFUNCTION(BlueprintNativeEvent, Category = "Interaction")
-    //  void OnGrab();
-    //  void OnGrab_Implementation();
-
-    // UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction")
-    // void OnTrigger();
-    // void OnTrigger_Implementation();
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
+    void OnTriggerReleased();
 };

@@ -9,9 +9,8 @@
 
 class UStaticMeshComponent;
 
-// #TODO: сделать абстрактным
-// UCLASS(Abstract, Blueprintable)
-UCLASS()
+
+UCLASS(Abstract)
 class JOYWAYTEST_API AItem : public AActor, public IInteractionInterface
 {
     GENERATED_BODY()
@@ -22,16 +21,25 @@ public:
 protected:
     virtual void BeginPlay() override;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Static Mesh")
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Static Mesh")
     UStaticMeshComponent* StaticMesh;
 
-    UPROPERTY(BlueprintReadWrite)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
     UGrabComponentCustom* GrabComponentCustom;
 
     virtual void OnGrab(UMotionControllerComponent* MotionControllerComponent) override;
-    virtual void OnRelease() override;
-    virtual void OnTrigger() override;
+    virtual void OnReleaseGrab() override;
+    void OnTriggerPressed_Implementation() override;
+    void OnTriggerReleased_Implementation() override;
+
 
 public:
     virtual void Tick(float DeltaTime) override;
+
+    bool SetStaticMesh(UStaticMeshComponent* InNewStaticMesh)
+    {
+        StaticMesh = InNewStaticMesh;
+        if (!IsValid(StaticMesh)) return false;
+        return true;
+    }
 };

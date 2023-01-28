@@ -5,7 +5,6 @@ AItem::AItem()
 {
     PrimaryActorTick.bCanEverTick = true;
 
-    // #TODO: добавить в наследника код ниже; этот класс будет абстрактным
     StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComp");
     SetRootComponent(StaticMesh);
 
@@ -25,17 +24,24 @@ void AItem::BeginPlay()
 
 void AItem::OnGrab(UMotionControllerComponent* MotionControllerComponent)
 {
-    UE_LOG(LogTemp, Error, TEXT("GRAB!!"));
+    if (GrabComponentCustom->GetIsGrababble())
+    {
+        AttachToComponent(MotionControllerComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+    }
 
-    AttachToComponent(MotionControllerComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+    // #TODO: simulatePhysics toggling
 }
 
-void AItem::OnRelease()
+void AItem::OnReleaseGrab()
 {
-    DetachRootComponentFromParent();
+    // if (GrabComponentCustom->GetIsGrabbed()) DetachRootComponentFromParent();
+    if (GrabComponentCustom->GetIsGrabbed()) DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+
+    // #TODO: simulatePhysics toggling
 }
 
-void AItem::OnTrigger() {}
+void AItem::OnTriggerPressed_Implementation(){};
+void AItem::OnTriggerReleased_Implementation() {}
 
 void AItem::Tick(float DeltaTime)
 {
