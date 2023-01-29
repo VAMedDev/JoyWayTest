@@ -1,11 +1,13 @@
-#include "GameFramework/Actor.h"
+
 #include "Actors/Item.h"
+#include "GameFramework/Actor.h"
 
 AItem::AItem()
 {
     PrimaryActorTick.bCanEverTick = true;
 
     StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComp");
+    check(StaticMesh);
     SetRootComponent(StaticMesh);
 
     StaticMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
@@ -26,7 +28,13 @@ void AItem::OnGrab(UMotionControllerComponent* MotionControllerComponent)
 {
     if (GrabComponentCustom->GetIsGrababble())
     {
-        AttachToComponent(MotionControllerComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+        ItemOwner = Cast<APawn>(MotionControllerComponent->GetOwner());
+
+        if (IsValid(ItemOwner))
+        {
+            AttachToComponent(MotionControllerComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+            SetOwner(ItemOwner);
+        }
     }
 
     // #TODO: simulatePhysics toggling
@@ -34,9 +42,12 @@ void AItem::OnGrab(UMotionControllerComponent* MotionControllerComponent)
 
 void AItem::OnReleaseGrab()
 {
-    // if (GrabComponentCustom->GetIsGrabbed()) DetachRootComponentFromParent();
-    if (GrabComponentCustom->GetIsGrabbed()) DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-
+    if (GrabComponentCustom->GetIsGrabbed())
+    {
+        DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        SetOwner(NULL);
+        ItemOwner = NULL;
+    }
     // #TODO: simulatePhysics toggling
 }
 

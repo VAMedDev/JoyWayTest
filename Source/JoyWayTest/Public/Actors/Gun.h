@@ -27,6 +27,9 @@ protected:
     UPROPERTY(BlueprintReadOnly)
     FTransform ArrowTransform;
 
+    UPROPERTY(EditDefaultsOnly)
+    float Damage = 10.0f;
+
 public:
     void OnTriggerPressed_Implementation() override;
 

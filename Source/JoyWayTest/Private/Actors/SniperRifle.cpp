@@ -1,9 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Components/AimComponent.h"
 #include "Actors/SniperRifle.h"
+#include "Components/AimComponent.h"
+#include "Components/HealthComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 class UAimComponent;
+class UHealthComponent;
 
 bool ASniperRifle::FireShot()
 {
@@ -11,18 +13,26 @@ bool ASniperRifle::FireShot()
 
     const FVector ShotStart = ArrowTransform.GetLocation();
     const FVector ShotDirection = ArrowTransform.GetRotation().GetForwardVector();
-    const FVector ShotEnd = ShotStart + ShotDirection * DistanceOfShot;
+    const FVector ShotEnd = ShotStart + ShotDirection * FVector{DistanceOfShot};
 
     DrawDebugLine(GetWorld(), ShotStart, ShotEnd, FColor::Magenta, false, 4.0f, 0, 3.0f);
 
     FHitResult HitResult;
     GetWorld()->LineTraceSingleByChannel(HitResult, ShotStart, ShotEnd, ECollisionChannel::ECC_Visibility);
 
-    if (HitResult.bBlockingHit)
+    if (!HitResult.bBlockingHit)
     {
-        
-        HitResult.Actor->GetComponentByClass(TSubclassOf<UAimComponent>());
+        return false;
     }
-    
+
+    const auto AffectedActor = HitResult.GetActor();
+    if (!IsValid(AffectedActor)) return false;
+
+    // домножаем на нормализованное значение дистанции: пока falloff линейный; в идеале сделать как в overwatch(полный урон в одном радиусе,
+    // постепенный falloff и после только минимальный урон)
+    float RealDamage = Damage * (1 - HitResult.Distance / DistanceOfShot);
+
+    UGameplayStatics::ApplyPointDamage(AffectedActor, RealDamage, ShotDirection, HitResult, ItemOwner->GetController(), this, nullptr);
+
     return true;
 }

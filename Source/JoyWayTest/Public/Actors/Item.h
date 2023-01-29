@@ -9,7 +9,6 @@
 
 class UStaticMeshComponent;
 
-
 UCLASS(Abstract)
 class JOYWAYTEST_API AItem : public AActor, public IInteractionInterface
 {
@@ -27,11 +26,13 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
     UGrabComponentCustom* GrabComponentCustom;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
+    APawn* ItemOwner;
+
     virtual void OnGrab(UMotionControllerComponent* MotionControllerComponent) override;
     virtual void OnReleaseGrab() override;
     void OnTriggerPressed_Implementation() override;
     void OnTriggerReleased_Implementation() override;
-
 
 public:
     virtual void Tick(float DeltaTime) override;
