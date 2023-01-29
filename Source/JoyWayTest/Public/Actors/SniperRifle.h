@@ -14,5 +14,6 @@ protected:
     float DistanceOfShot{1500.0f};
 
 public:
+    UFUNCTION(BlueprintCallable)
     virtual bool FireShot() override;
 };

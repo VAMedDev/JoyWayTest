@@ -32,7 +32,14 @@ bool ASniperRifle::FireShot()
     // постепенный falloff и после только минимальный урон)
     float RealDamage = FiredDamage * (1 - HitResult.Distance / DistanceOfShot);
 
-    UGameplayStatics::ApplyPointDamage(AffectedActor, RealDamage, ShotDirection, HitResult, ItemOwner->GetController(), this, nullptr);
+    if (!ItemOwner)
+    {
+        UGameplayStatics::ApplyPointDamage(
+            AffectedActor, RealDamage / 2.0f, ShotDirection, HitResult, nullptr, this, nullptr);
+        return true;
+    }
+
+    UGameplayStatics::ApplyPointDamage(AffectedActor, RealDamage / 2.0f, ShotDirection, HitResult, ItemOwner->GetController(), this, nullptr);
 
     return true;
 }
