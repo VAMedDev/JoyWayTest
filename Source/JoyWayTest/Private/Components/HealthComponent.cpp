@@ -33,30 +33,24 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 void UHealthComponent::OnTakeAnyDamage(
     AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-    if (Damage <= 0 || IsDead()) return;
+    // if (Damage <= 0 || IsDead()) return;
 
-    Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
+    // Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
 
-    Health -= Damage;
+    // Health -= Damage;
 
-    if (IsDead())
-    {
-        OnDeath.Broadcast();
-    };
+    // if (IsDead())
+    //{
+    //     OnDeath.Broadcast();
+    // };
 }
 
 void UHealthComponent::OnTakePointDamage(AActor* DamagedActor, float Damage, AController* InstigatedBy, FVector HitLocation,
     UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const UDamageType* DamageType, AActor* DamageCauser)
 {
-    Health -= Damage;
-}
-
-void UHealthComponent::OnTakeRadialDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, FVector Origin,
-    FHitResult HitInfo, AController* InstigatedBy, AActor* DamageCauser)
-{
     if (Damage <= 0 || IsDead()) return;
 
-    Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
+    Health = FMath::Clamp(Health - Damage, 0.f, MaxHealth);
 
     Health -= Damage;
 
@@ -64,4 +58,19 @@ void UHealthComponent::OnTakeRadialDamage(AActor* DamagedActor, float Damage, co
     {
         OnDeath.Broadcast();
     };
+}
+
+void UHealthComponent::OnTakeRadialDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, FVector Origin,
+    FHitResult HitInfo, AController* InstigatedBy, AActor* DamageCauser)
+{
+     if (Damage <= 0 || IsDead()) return;
+
+     Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
+
+     Health -= Damage;
+
+     if (IsDead())
+    {
+         OnDeath.Broadcast();
+     };
 }

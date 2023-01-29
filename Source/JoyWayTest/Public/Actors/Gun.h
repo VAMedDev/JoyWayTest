@@ -28,7 +28,7 @@ protected:
     FTransform ArrowTransform;
 
     UPROPERTY(EditDefaultsOnly)
-    float Damage = 10.0f;
+    float FiredDamage = 10.0f;
 
 public:
     void OnTriggerPressed_Implementation() override;

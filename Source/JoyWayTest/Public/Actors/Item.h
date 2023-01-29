@@ -26,7 +26,7 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
     UGrabComponentCustom* GrabComponentCustom;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
+    UPROPERTY(BlueprintReadOnly, Category = "Components")
     APawn* ItemOwner;
 
     virtual void OnGrab(UMotionControllerComponent* MotionControllerComponent) override;

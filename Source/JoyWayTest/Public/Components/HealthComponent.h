@@ -8,8 +8,8 @@ class AController;
 class UPrimitiveComponent;
 class UDamageType;
 
-DECLARE_MULTICAST_DELEGATE(FOnDeath)
-// DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath)
+//DECLARE_MULTICAST_DELEGATE(FOnDeath1)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class JOYWAYTEST_API UHealthComponent : public UActorComponent
@@ -42,8 +42,8 @@ private:
         AController* InstigatedBy, AActor* DamageCauser);
 
 public:
-    // UFUNCTION(BlueprintAssignable, Category = "DeathEvents")
-    // UFUNCTION()
+
+    UPROPERTY(BlueprintAssignable, Category = "DeathEvents")
     FOnDeath OnDeath;
 
     // Called every frame
@@ -54,6 +54,9 @@ public:
 
     UFUNCTION(BlueprintCallable)
     float GetHealth() const { return Health; };
+
+    UFUNCTION(BlueprintCallable)
+    void SetHealth(const float InHealth) { Health = InHealth; }
 
     UFUNCTION(BlueprintCallable)
     float GetMaxHealth() const { return MaxHealth; };

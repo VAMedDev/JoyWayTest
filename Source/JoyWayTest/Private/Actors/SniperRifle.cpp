@@ -1,8 +1,8 @@
 
 #include "Actors/SniperRifle.h"
-#include "Components/AimComponent.h"
 #include "Components/HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
+
 
 class UAimComponent;
 class UHealthComponent;
@@ -30,7 +30,7 @@ bool ASniperRifle::FireShot()
 
     // домножаем на нормализованное значение дистанции: пока falloff линейный; в идеале сделать как в overwatch(полный урон в одном радиусе,
     // постепенный falloff и после только минимальный урон)
-    float RealDamage = Damage * (1 - HitResult.Distance / DistanceOfShot);
+    float RealDamage = FiredDamage * (1 - HitResult.Distance / DistanceOfShot);
 
     UGameplayStatics::ApplyPointDamage(AffectedActor, RealDamage, ShotDirection, HitResult, ItemOwner->GetController(), this, nullptr);
 

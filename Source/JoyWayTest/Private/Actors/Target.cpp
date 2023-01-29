@@ -27,6 +27,7 @@ ATarget::ATarget()
 void ATarget::BeginPlay()
 {
     Super::BeginPlay();
+    HealthComponent->OnDeath.AddDynamic(this, &ATarget::OnDeath);
 }
 
 void ATarget::Tick(float DeltaTime)
@@ -37,3 +38,9 @@ void ATarget::Tick(float DeltaTime)
     float CurrentHealth = HealthComponent->GetHealth();
     HealthScoreComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f "), CurrentHealth)));
 }
+
+void ATarget::OnDeath()
+{
+    Destroy();
+}
+
