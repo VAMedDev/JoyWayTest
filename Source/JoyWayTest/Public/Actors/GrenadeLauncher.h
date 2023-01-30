@@ -18,7 +18,8 @@ protected:
     TSubclassOf<ASpawnedProjectile> SpawnedProjectileClass;
 
 public:
-
     UFUNCTION(BlueprintCallable)
     virtual bool FireShot() override;
+
+    virtual void OnGrab(UMotionControllerComponent* MotionControllerComponent) override;
 };
