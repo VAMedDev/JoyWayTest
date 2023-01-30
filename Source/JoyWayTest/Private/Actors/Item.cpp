@@ -16,7 +16,6 @@ AItem::AItem()
 
     GrabComponentCustom = CreateDefaultSubobject<UGrabComponentCustom>("GrabComponentCustom");
 
-    // UE_LOG(LogTemp, Error, TEXT("Constraction ended"));
 }
 
 void AItem::BeginPlay()

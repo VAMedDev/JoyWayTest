@@ -41,6 +41,8 @@ void ATarget::Tick(float DeltaTime)
 
 void ATarget::OnDeath()
 {
+    // tick must be enabled for destroy event
+    if (!IsActorTickEnabled()) return;
     Destroy();
 }
 

@@ -23,7 +23,8 @@ void UGrabComponentCustom::TickComponent(float DeltaTime, ELevelTick TickType, F
 bool UGrabComponentCustom::TryGrab(UMotionControllerComponent* MotionControllerComponent)
 {
     if (IsGrabbed) return false;
-    IInteractionInterface* Interface = Cast<IInteractionInterface>(Owner);
+    //IInteractionInterface* Interface = Cast<IInteractionInterface>(Owner);
+    IInteractionInterface* Interface = Cast<IInteractionInterface>(GetOwner());
 
     if (!Interface) return false;
     Interface->OnGrab(MotionControllerComponent);
@@ -35,7 +36,8 @@ bool UGrabComponentCustom::TryGrab(UMotionControllerComponent* MotionControllerC
 bool UGrabComponentCustom::TryRelease()
 {
     if (!IsGrabbed) return false;
-    IInteractionInterface* Interface = Cast<IInteractionInterface>(Owner);
+    //IInteractionInterface* Interface = Cast<IInteractionInterface>(Owner);
+    IInteractionInterface* Interface = Cast<IInteractionInterface>(GetOwner());
 
     if (!Interface) return false;
     Interface->OnReleaseGrab();

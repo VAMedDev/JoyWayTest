@@ -4,6 +4,8 @@
 #include "UObject/Interface.h"
 #include "InteractionInterface.generated.h"
 
+class AHelperItem;
+
 UINTERFACE(MinimalAPI, Blueprintable)
 class UInteractionInterface : public UInterface
 {
@@ -26,4 +28,7 @@ public:
 
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
     void OnTriggerReleased();
+
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
+    void OnOverlapWithHelperItem(AHelperItem* InHelperItem);
 };
