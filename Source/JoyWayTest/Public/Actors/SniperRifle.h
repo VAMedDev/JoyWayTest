@@ -10,8 +10,7 @@ class JOYWAYTEST_API ASniperRifle : public AGun
     GENERATED_BODY()
 
 protected:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-    float DistanceOfShot{1500.0f};
+
 
 public:
     UFUNCTION(BlueprintCallable)

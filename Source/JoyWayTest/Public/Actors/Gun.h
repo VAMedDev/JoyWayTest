@@ -22,8 +22,11 @@ protected:
     UPROPERTY(BlueprintReadOnly)
     FTransform ArrowTransform;
 
-    UPROPERTY(EditDefaultsOnly)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
     float FiredDamage = 10.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+    float DistanceOfShot{1500.0f};
 
 public:
     void OnTriggerPressed_Implementation() override;
